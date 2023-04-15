@@ -3,23 +3,27 @@ import axios from "axios"
 
 const backendURL = "http://localhost:8000"
 
+interface Credentials {
+  email: string
+  password: string
+}
+
 export const userLogin = createAsyncThunk(
   "auth/login",
-  async ({ email, password }: any, { rejectWithValue }) => {
+  async (credentials: Credentials, { rejectWithValue }) => {
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json"
-        }
+      const headers = {
+        Authorization: `Basic ${btoa(
+          `${credentials.email}:${credentials.password}`
+        )}`
       }
       const { data } = await axios.post(
         `${backendURL}/auth/login`,
-        { email, password },
-        config
+        {},
+        { headers }
       )
       // store user's token in local storage
-      console.log("user logged in" + data.userToken)
-      localStorage.setItem("userToken", data.userToken)
+      console.log("user logged in " + data)
 
       return data
     } catch (error: any) {

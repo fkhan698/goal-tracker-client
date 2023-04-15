@@ -2,8 +2,8 @@ import React, { useEffect } from "react"
 
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
-import { login } from "../../reducers/authSlice"
 import { useNavigate } from "react-router-dom"
+import { userLogin } from "../../reducers/auth/authActions"
 
 const LoginForm = () => {
   const isLoggedIn = useSelector((state) => state.auth.user !== null)
@@ -13,7 +13,7 @@ const LoginForm = () => {
   const navigate = useNavigate()
 
   const submitForm = (data: any) => {
-    dispatch(login(data))
+    dispatch(userLogin(data))
     console.log(data)
   }
   useEffect(() => {

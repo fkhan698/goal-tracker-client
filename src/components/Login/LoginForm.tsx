@@ -18,11 +18,12 @@ const LoginForm = () => {
   }
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/homepage")
+      navigate("/")
     }
   }, [isLoggedIn, navigate])
   return (
     <form onSubmit={handleSubmit(submitForm)}>
+      <h1>Login</h1>
       <div className="form-group">
         <label htmlFor="email">Email</label>
         <input

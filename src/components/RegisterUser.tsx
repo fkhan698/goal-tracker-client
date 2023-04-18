@@ -2,7 +2,8 @@ import React from "react"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
-import { registerUser } from "../../reducers/auth/authActions"
+import { userRegister } from "../reducers/auth/authActions"
+import { useNavigate } from "react-router-dom"
 
 const Register = () => {
   const { loading, userInfo, error, success } = useSelector(
@@ -10,22 +11,22 @@ const Register = () => {
   )
   const dispatch = useDispatch()
   const { register, handleSubmit } = useForm()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (success) {
-      Router.push("/")
+      navigate("/login")
     }
-  }, [])
+  }, [success, navigate])
   const submitForm = (data) => {
     // transform email string to lowercase to avoid case sensitivity issues in login
     data.email = data.email.toLowerCase()
-    dispatch(registerUser(data))
+    dispatch(userRegister(data))
   }
   return (
     <div>
-      <h1>Login Component</h1>
+      <h1>Register Component</h1>
       <form onSubmit={handleSubmit(submitForm)}>
-        {error && <Error>{error}</Error>}
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -45,11 +46,11 @@ const Register = () => {
           />
         </div>
         <button type="submit" className="button" disabled={loading}>
-          {loading ? "Loadiing" : "Register"}
+          {loading ? "Loading" : "Register"}
         </button>
       </form>
     </div>
   )
 }
 
-export default Login
+export default Register

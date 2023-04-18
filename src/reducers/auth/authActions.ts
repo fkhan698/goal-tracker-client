@@ -8,6 +8,27 @@ interface Credentials {
   password: string
 }
 
+export const userRegister = createAsyncThunk(
+  "auth/register",
+  async ({ email, password }: Credentials, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+      await axios.post(`${backendURL}/users`, { email, password }, config)
+    } catch (error) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
 export const userLogin = createAsyncThunk(
   "auth/login",
   async (credentials: Credentials, { rejectWithValue }) => {

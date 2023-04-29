@@ -23,7 +23,12 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setCredentials: (state, { payload }) => {
+      state.user = payload
+      console.log("Setting user cred " + state.user)
+    }
+  },
   extraReducers: (builder) => {
     builder
 
@@ -49,6 +54,7 @@ const authSlice = createSlice({
         state.error = null
         console.log("setting jwt_token:", payload.token)
         localStorage.setItem("jwt_token", payload.token)
+        console.log(state.user)
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.isLoading = false
@@ -57,5 +63,6 @@ const authSlice = createSlice({
       })
   }
 })
+export const { setCredentials } = authSlice.actions
 
 export default authSlice.reducer

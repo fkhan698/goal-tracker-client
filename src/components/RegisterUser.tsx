@@ -22,6 +22,7 @@ const Register = () => {
     // transform email string to lowercase to avoid case sensitivity issues in login
     data.email = data.email.toLowerCase()
     dispatch(userRegister(data))
+    console.log(userInfo)
   }
   return (
     <div>
